@@ -27,4 +27,19 @@ public class CategoriaService implements Serializable {
 	public List<Categoria> findAll() {
 		return repo.findAll();
 	}
+	
+	public Categoria insert(Categoria obj){
+		obj.setId(null);
+		return repo.save(obj);
+	}
+	
+	public Categoria update(Categoria obj){
+		repo.findById(obj.getId());
+		return repo.save(obj);
+	}
+	
+	public void delete(Integer id){
+		find(id);
+		repo.deleteById(id);
+	}
 }
