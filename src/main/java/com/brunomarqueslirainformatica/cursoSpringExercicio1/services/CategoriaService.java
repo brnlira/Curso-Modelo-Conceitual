@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.brunomarqueslirainformatica.cursoSpringExercicio1.domain.Categoria;
+import com.brunomarqueslirainformatica.cursoSpringExercicio1.dto.CategoriaDTO;
 import com.brunomarqueslirainformatica.cursoSpringExercicio1.repositories.CategoriaRepository;
 import com.brunomarqueslirainformatica.cursoSpringExercicio1.services.exceptions.ObjectNotFoundException;
 
@@ -49,5 +50,9 @@ public class CategoriaService implements Serializable {
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String direction, String orderBy){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	public Categoria fromDTO(CategoriaDTO obj) {
+		return new Categoria(obj.getId(), obj.getNome());
 	}
 }

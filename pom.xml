@@ -10,13 +10,13 @@
 		<version>2.3.0.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	
+
 	<groupId>com.brunomarqueslirainformatica</groupId>
 	<artifactId>cursoSpringExercicio1</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>cursoSpringExercicio1</name>
 	<description>First project for Spring Boot</description>
-	
+
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -61,6 +61,25 @@
 			<artifactId>spring-data-jpa</artifactId>
 			<version>2.3.0.RELEASE</version><!--$NO-MVN-MAN-VER$ -->
 		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.0.13.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.el</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.0.Final</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
