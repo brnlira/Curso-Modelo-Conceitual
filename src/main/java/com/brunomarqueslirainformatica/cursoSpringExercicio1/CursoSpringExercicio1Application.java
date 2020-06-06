@@ -97,20 +97,29 @@ public class CursoSpringExercicio1Application implements CommandLineRunner {
 	   		est2.getCidades().addAll(Arrays.asList(c2, c3)); 
 	   		
 	   		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "39665211245", TipoCliente.PESSOAFISICA);
+	   		Cliente cli2 = new Cliente(null, "Antonia Belmudes", "antonia@gmail.com", "49665211245", TipoCliente.PESSOAFISICA);
+	   		Cliente cli3 = new Cliente(null, "Breno Hurst", "berno@gmail.com", "59665211245", TipoCliente.PESSOAFISICA);
 	   		
-	   		cli1.getTelefones().addAll(Arrays.asList("45142563", "969582325"));  		
+	   		cli1.getTelefones().addAll(Arrays.asList("45142563", "969582325"));
+	   		cli2.getTelefones().add("97652525");
+	   		cli3.getTelefones().add("76980504");
 	
 	   		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Perdizes", "01258020", cli1, c1);
 	   		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Sumaré", "91258420", cli1, c2);
 	   		
+	   		Endereco e3 = new Endereco(null, "Av Brasil", "1530", "", "Sumaré", "03258020", cli2, c2);
+	   		Endereco e4 = new Endereco(null, "Av dos Pássaros", "15", "", "Praça das Àrvores", "20258420", cli3, c2);
+	   		
+	   		cli3.getEnderecos().add(e4);
+	   		cli2.getEnderecos().add(e3);
 	   		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
 	   		
 	   		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 	   		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 	   		estadoRepository.saveAll(Arrays.asList(est1, est2));
 	   		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3)); 
-	   		clienteRepository.saveAll(Arrays.asList(cli1));
-	   		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+	   		clienteRepository.saveAll(Arrays.asList(cli1, cli2, cli3));
+	   		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3, e4));
    		
    			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
    			
