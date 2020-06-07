@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 //import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.brunomarqueslirainformatica.cursoSpringExercicio1.domain.Categoria;
 import com.brunomarqueslirainformatica.cursoSpringExercicio1.domain.Cliente;
-import com.brunomarqueslirainformatica.cursoSpringExercicio1.dto.CategoriaDTO;
 import com.brunomarqueslirainformatica.cursoSpringExercicio1.dto.ClienteDTO;
 import com.brunomarqueslirainformatica.cursoSpringExercicio1.services.ClienteService;
 
@@ -45,13 +44,13 @@ public class ClienteResource implements Serializable {
 		return ResponseEntity.ok().body(listDto);
 	}
 	
-	//@RequestMapping(method=RequestMethod.POST)
-	//public ResponseEntity<Void> insert(@RequestBody Cliente obj){
-		//obj = service.insert(obj);
-		//URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				//.path("/{id}").buildAndExpand(obj.getId()).toUri();
-			//return ResponseEntity.created(uri).build();
-	//}
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@RequestBody Cliente obj){
+		obj = service.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+		.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDto, @PathVariable Integer id){

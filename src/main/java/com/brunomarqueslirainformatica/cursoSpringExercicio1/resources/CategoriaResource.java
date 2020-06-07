@@ -53,9 +53,8 @@ public class CategoriaResource implements Serializable {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDTO, @PathVariable Integer id){
-		Categoria obj = service.fromDTO(objDTO);
-		objDTO.getId();
+	public ResponseEntity<?> update(@RequestBody Categoria obj, @PathVariable Integer id){
+		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}

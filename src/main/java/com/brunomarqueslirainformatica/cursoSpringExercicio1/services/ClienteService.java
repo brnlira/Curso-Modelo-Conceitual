@@ -29,6 +29,13 @@ public class ClienteService implements Serializable {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName(), null));
 	}
 	
+	public Cliente insert(Cliente obj){
+		obj.setId(null);
+		obj.setNome(obj.getNome());
+		obj.setEmail(obj.getEmail());
+		return repo.save(obj);
+	}
+	
 	public List<Cliente> findAll() {
 		return repo.findAll();
 	}
