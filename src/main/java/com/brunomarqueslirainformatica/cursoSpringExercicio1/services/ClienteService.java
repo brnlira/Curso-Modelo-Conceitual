@@ -59,7 +59,7 @@ public class ClienteService implements Serializable {
 			repo.deleteById(id);
 		}
 		catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityViolationException("Não é possível excluir porque há entidades relacionadas.");
+			throw new DataIntegrityViolationException("Não é possível excluir porque há pedidos relacionadas.");
 		}
 	}
 	
