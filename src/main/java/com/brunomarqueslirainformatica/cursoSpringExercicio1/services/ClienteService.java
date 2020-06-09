@@ -10,10 +10,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.brunomarqueslirainformatica.cursoSpringExercicio1.domain.Cidade;
 import com.brunomarqueslirainformatica.cursoSpringExercicio1.domain.Cliente;
+import com.brunomarqueslirainformatica.cursoSpringExercicio1.domain.Endereco;
+import com.brunomarqueslirainformatica.cursoSpringExercicio1.domain.enums.TipoCliente;
 import com.brunomarqueslirainformatica.cursoSpringExercicio1.dto.ClienteDTO;
+import com.brunomarqueslirainformatica.cursoSpringExercicio1.dto.ClienteNewDTO;
 import com.brunomarqueslirainformatica.cursoSpringExercicio1.repositories.ClienteRepository;
+import com.brunomarqueslirainformatica.cursoSpringExercicio1.repositories.EnderecoRepository;
 import com.brunomarqueslirainformatica.cursoSpringExercicio1.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -23,21 +30,21 @@ public class ClienteService implements Serializable {
 	@Autowired
 	private ClienteRepository repo;
 
+	@Autowired
+	private EnderecoRepository endrepo;
+	
 	public Cliente find(Integer id) {
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName(), null));
 	}
 	
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public Cliente insert(Cliente obj){
 		obj.setId(null);
-		obj.setNome(obj.getNome());
-		obj.setEmail(obj.getEmail());
-		return repo.save(obj);
-	}
-	
-	public List<Cliente> findAll() {
-		return repo.findAll();
+		obj = repo.save(obj);
+		endrepo.saveAll(obj.getEnderecos());
+		return obj;
 	}
 	
 	public Cliente update(Cliente obj){
@@ -56,6 +63,10 @@ public class ClienteService implements Serializable {
 		}
 	}
 	
+	public List<Cliente> findAll() {
+		return repo.findAll();
+	}
+	
 	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String direction, String orderBy){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
@@ -63,6 +74,19 @@ public class ClienteService implements Serializable {
 	
 	public Cliente fromDTO(ClienteDTO objDto) {
 		return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
+	}
+	
+	public Cliente fromDTO(ClienteNewDTO objNewDTO) {
+		Cliente cli = new Cliente(null, objNewDTO.getNome(), objNewDTO.getEmail(), objNewDTO.getCpfouCnpj(), TipoCliente.toEnum(objNewDTO.getTipo()));
+		Cidade cid = new Cidade(objNewDTO.getCidadeId(), null, null);
+		Endereco end = new Endereco(null, objNewDTO.getLogradouro(), objNewDTO.getNumero(), objNewDTO.getComplemento(), objNewDTO.getBairro(), objNewDTO.getCod_postal(), cli, cid);
+		cli.getEnderecos().add(end);
+		cli.getTelefones().add(objNewDTO.getTelefone1());
+		if (objNewDTO.getTelefone2() != null) {
+		cli.getTelefones().add(objNewDTO.getTelefone2());}
+		if (objNewDTO.getTelefone3() != null) {
+			cli.getTelefones().add(objNewDTO.getTelefone3());}
+		return cli;
 	}
 	
 	private void updateData(Cliente newObj, Cliente obj) {
