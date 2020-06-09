@@ -77,7 +77,7 @@ public class ClienteService implements Serializable {
 	}
 	
 	public Cliente fromDTO(ClienteNewDTO objNewDTO) {
-		Cliente cli = new Cliente(null, objNewDTO.getNome(), objNewDTO.getEmail(), objNewDTO.getCpfouCnpj(), TipoCliente.toEnum(objNewDTO.getTipo()));
+		Cliente cli = new Cliente(null, objNewDTO.getNome(), objNewDTO.getEmail(), objNewDTO.getcpfouCnpj(), TipoCliente.toEnum(objNewDTO.getTipo()));
 		Cidade cid = new Cidade(objNewDTO.getCidadeId(), null, null);
 		Endereco end = new Endereco(null, objNewDTO.getLogradouro(), objNewDTO.getNumero(), objNewDTO.getComplemento(), objNewDTO.getBairro(), objNewDTO.getCod_postal(), cli, cid);
 		cli.getEnderecos().add(end);
